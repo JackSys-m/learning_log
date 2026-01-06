@@ -26,7 +26,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-k#@4)!cybuga(myu)l$^7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['learning-log.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    'learning-log.onrender.com', # ⬅️ ваш конкретный домен!
+    'localhost',
+    '127.0.0.1',
+    '.onrender.com',  # ⬅️ поддомены Render
+    ]
 
 
 # Application definition
@@ -88,6 +93,24 @@ DATABASES = {
         conn_max_age=600
     )
 }
+
+# Проверяем, есть ли DATABASE_URL в окружении
+if 'DATABASE_URL' in os.environ:
+    # Используем PostgreSQL с Render
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.environ.get('DATABASE_URL'),
+            conn_max_age=600
+        )
+    }
+else:
+    # Локальная разработка с SQLite
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
