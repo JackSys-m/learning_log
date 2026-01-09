@@ -25,6 +25,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-k#@4)!cybuga(myu)l$^7
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
+print(f"DEBUG mode is: {DEBUG}")  # Увидите в логах Render
 
 ALLOWED_HOSTS = [
     'learning-log.onrender.com', # ⬅️ ваш конкретный домен!
